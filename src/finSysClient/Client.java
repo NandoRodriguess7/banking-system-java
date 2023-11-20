@@ -5,6 +5,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
+import finSysAccount.BankAccount;
 import finSysUtil.CPFUtil;
 
 public class Client {
@@ -15,17 +16,20 @@ public class Client {
 	private double balance;
 	private List<String> inquiry;
 	
+	private BankAccount bankAccount;
 	private boolean blockedCard;
+	private boolean requestedCard;	
 	
-	public Client(String name, String cpf, LocalDate dateOfBirth) {
+	public Client(String name, String cpf, LocalDate dateOfBirth, BankAccount bankAccount) {
 		this.name = name;
 		this.cpf = cpf;
 		this.dateOfBirth = dateOfBirth;
 		this.balance = 0.0;
 		this.inquiry = new ArrayList<>();
+		this.bankAccount = bankAccount;
 		this.blockedCard = false;
+		this.requestedCard = false;
 	}
-
 
 	public String getName() {
 		return name;
@@ -36,23 +40,24 @@ public class Client {
 		this.name = name;
 	}
 
-
 	public String getCpf() {
 		return cpf;
 	}
 
-
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-
-
+	
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 	public double getBalance() {
 		return balance;
+	}
+	
+	public BankAccount getBankAccount() {
+		return bankAccount;
 	}
 	
 	public boolean isBlockedCard() {
@@ -65,6 +70,10 @@ public class Client {
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+	
+	public void setBankAccount(BankAccount bankAccount) {
+		this.bankAccount = bankAccount;
 	}
 	
 	public void setBlockedCard(boolean blockedCard) {
@@ -156,6 +165,50 @@ public class Client {
 		}
 		else {
 			System.out.println("Alert configured, but the current balance is not below the threshold.");
+		}
+	}
+	
+	// Card Management Methods
+	public void RequestNewCard() {
+		if (!requestedCard) {
+			System.out.println("Applying for a new card");
+			System.out.println("New card successfully requested");
+			requestedCard = true;
+		}
+		else {
+			System.out.println("You've already applied for a new card. Wait for it to be processed...");
+		}
+	}
+	
+	public void blockCard() {
+		if (requestedCard) {
+			if (!blockedCard) {
+				System.out.println("Blocking Card...");
+				blockedCard = true;
+				System.out.println("Card Blocked Successfully.");
+			}
+			else {
+				System.out.println("The card is already blocked");
+			}
+		}
+		else {
+			System.out.println("You need to apply for a new card before blocking.");
+		}
+	}
+	
+	public void unlockCard() {
+		if (requestedCard) {
+			if (blockedCard) {
+				System.out.println("Unlocking Card...");
+				blockedCard = false;
+				System.out.println("Card successfully unlocked.");
+			}
+			else {
+				System.out.println("The card is already successfully unlocked.");
+			}
+		}
+		else {
+			System.out.println("You need to apply for a new card before unlocking.");
 		}
 	}
 	
