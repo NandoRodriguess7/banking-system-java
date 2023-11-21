@@ -42,14 +42,6 @@ public class CPFUtil {
 		return cpf.matches("(\\d)\\1*");
 	}
 	
-	private static int calculateSum(String cpf, int[] digits, int position) {
-		int sum = 0;
-		for (int i=0; i<position; i++) {
-			sum += digits[i] * (position + 1 - i);
-		}
-		return sum;
-	}
-	
 	public static String formatCPF(String cpf) {
 		cpf = cpf.replaceAll("[^0-9]", "");
 		return String.format("%s.%s.%s-%s",
