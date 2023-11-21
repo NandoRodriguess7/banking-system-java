@@ -59,7 +59,7 @@ public class BankAccount {
 		}
 	}
 	
-	public void withDraw(double value) {
+	public boolean withDraw(double value) {
 		if (value > 0 && value <= balance && value <= withDrawalLimit) {
 			balance -= value;
 			recordTransaction("Withdraw", value);
@@ -67,6 +67,7 @@ public class BankAccount {
 		else {
 			System.out.println("Invalid withdrawal. Check the withdrawal amount or limit.");
 		}
+		return false;
 	}
 	
 	public void transfer(BankAccount destiny, double value) {

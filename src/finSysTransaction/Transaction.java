@@ -3,6 +3,7 @@ package finSysTransaction;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import finSysAccount.BankAccount;
 import finSysEnums.EnumTransaction;
 
 public class Transaction {
@@ -32,6 +33,26 @@ public class Transaction {
 	public String getFormattedDateTime() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		return dateTime.format(formatter);
+	}
+	
+	public static void transfer(BankAccount origin, BankAccount destiny, double value) {
+		if(origin.withDraw(value)) {
+			destiny.deposit(value);
+			System.out.println("Transfer of U$ " + value + " successfully carried out!");
+		}
+		else {
+			System.out.println("Transfer failed. Insufficient balance in the source account");
+		}
+	}
+	
+	public static void payment(BankAccount account, double value, String description) {
+		if (account.withDraw(value)) {
+			System.out.println("Payment of U$ " + value + "successfully carried out!");
+			System.out.println("Description: " + description);
+		}
+		else {
+			System.out.println("Failed to pay. Insufficient balance in the account.");
+		}
 	}
 	
 	public boolean isValid() {
